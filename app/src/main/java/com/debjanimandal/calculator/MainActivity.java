@@ -10,330 +10,495 @@ import android.widget.TextView;
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
-    private Button btn0,btn1,btn3,btn4, btn5, btn6, btn7, btn8, btn9, btn2,btnAC, btnDEL, btnADD,btnSUB, btnDOT, btnEQUALS, btnDIV, btnMUL;
-    private TextView history, result;
-    private String number=null;
-    double firstNumber=0;
-    double lastNumber=0;
-    String status=null;
-    Boolean operator=false;
-    DecimalFormat myformat=new DecimalFormat("######.######");
-    String his,curres;
-    Boolean dotflag=true;
-    Boolean btnACcontrol=true;
-    Boolean btnEqualsControl=false;
+    private Button btn0,btn1,btn2,btn3,btn4,btn5,btn6,btn7,btn8,btn9
+            ,btnAC,btnDel,btnPlus,btnMinus,btnDivide,btnMulti,btnEquals,btnDot;
+
+    private TextView textViewResult,textViewHistory;
+
+    private String number = null;
+
+    double firstNumber = 0;
+    double lastNumber = 0;
+
+    String status = null;
+    boolean operator = false;
+    boolean operatorcheck=false;
+
+    DecimalFormat myFormatter = new DecimalFormat("######.######");
+
+    String history, currentResult;
+
+    boolean dot = true;
+
+    boolean btnACcontrol = true;
+
+    boolean btnEqualsControl = false;
+    boolean equalsoperater=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btn0=findViewById(R.id.btn0);
-        btn1=findViewById(R.id.btn1);
-        btn2=findViewById(R.id.btn2);
-        btn3=findViewById(R.id.btn3);
-        btn4=findViewById(R.id.btn4);
-        btn5=findViewById(R.id.btn5);
-        btn6=findViewById(R.id.btn6);
-        btn7=findViewById(R.id.btn7);
-        btn8=findViewById(R.id.btn8);
-        btn9=findViewById(R.id.btn9);
-        btnDIV=findViewById(R.id.btnDiv);
-        btnMUL=findViewById(R.id.btnMul);
-        btnADD=findViewById(R.id.btnadd);
-        btnSUB=findViewById(R.id.btnsub);
-        btnAC=findViewById(R.id.btnAC);
-        btnDEL=findViewById(R.id.btnDel);
-        btnDOT=findViewById(R.id.btndot);
-        btnEQUALS=findViewById(R.id.btnequals);
-        history=findViewById(R.id.textViewhistory);
-        result=findViewById(R.id.textViewResult);
+
+        btn0 = findViewById(R.id.btn0);
+        btn1 = findViewById(R.id.btn1);
+        btn2 = findViewById(R.id.btn2);
+        btn3 = findViewById(R.id.btn3);
+        btn4 = findViewById(R.id.btn4);
+        btn5 = findViewById(R.id.btn5);
+        btn6 = findViewById(R.id.btn6);
+        btn7 = findViewById(R.id.btn7);
+        btn8 = findViewById(R.id.btn8);
+        btn9 = findViewById(R.id.btn9);
+
+        btnPlus = findViewById(R.id.btnadd);
+        btnMinus = findViewById(R.id.btnsub);
+        btnDivide = findViewById(R.id.btnDiv);
+        btnMulti = findViewById(R.id.btnMul);
+
+        btnAC = findViewById(R.id.btnAC);
+        btnDel = findViewById(R.id.btnDelete);
+        btnDot = findViewById(R.id.btndot);
+        btnEquals = findViewById(R.id.btnequals);
+
+        textViewResult = findViewById(R.id.textViewResult);
+        textViewHistory = findViewById(R.id.textViewhistory);
+
 
         btn0.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                operatorcheck=false;
                 numberClick("0");
             }
         });
+
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                operatorcheck=false;
                 numberClick("1");
+
             }
         });
+
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                operatorcheck=false;
                 numberClick("2");
             }
         });
+
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                operatorcheck=false;
                 numberClick("3");
             }
         });
+
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                operatorcheck=false;
                 numberClick("4");
             }
         });
+
         btn5.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                operatorcheck=false;
                 numberClick("5");
             }
         });
+
         btn6.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                operatorcheck=false;
                 numberClick("6");
             }
         });
+
         btn7.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                operatorcheck=false;
                 numberClick("7");
             }
         });
+
         btn8.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                operatorcheck=false;
                 numberClick("8");
             }
         });
+
         btn9.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
+                operatorcheck=false;
                 numberClick("9");
             }
         });
-        btnDIV.setOnClickListener(new View.OnClickListener() {
+
+        btnAC.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                his=history.getText().toString();
-                curres=result.getText().toString();
-                history.setText(his+curres+"/");
-                if(operator==true)
-                {
-                    if(status=="addition") {
-                        plus();
-                    } else if (status=="multiplication") {
-                        mul();
-                    } else if (status=="subtraction") {
-                        minus();
-                    } else {
-                        div();
-                    }
-                }
-                status="divide";
-                operator=false;
-                number=null;
+            public void onClick(View v) {
+
+                number = null;
+                status = null;
+                textViewResult.setText("0");
+                textViewHistory.setText("");
+                firstNumber = 0;
+                lastNumber = 0;
+                dot = true;
+                btnACcontrol = true;
+
             }
         });
-        btnMUL.setOnClickListener(new View.OnClickListener() {
+
+        btnDel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                his=history.getText().toString();
-                curres=result.getText().toString();
-                history.setText(his+curres+"*");
-                if(operator==true)
+            public void onClick(View v) {
+
+                if (btnACcontrol)
                 {
-                    if(status=="addition") {
-                        plus();
-                    } else if (status=="divide") {
-                        div();
-                    } else if (status=="subtraction") {
-                        minus();
-                    } else {
-                        mul();
-                    }
+                    textViewResult.setText("0");
                 }
-                status="multiplication";
-                operator=false;
-                number=null;
-            }
-        });
-        btnADD.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                his=history.getText().toString();
-                curres=result.getText().toString();
-                history.setText(his+curres+"+");
-                if(operator==true)
+                else
                 {
-                    if(status=="multiplication") {
-                        mul();
-                    } else if (status=="divide") {
-                        div();
-                    } else if (status=="subtraction") {
-                        minus();
-                    } else {
-                        plus();
-                    }
-                }
-                status="addition";
-                operator=false;
-                number=null;
-            }
-        });
-        btnSUB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                his=history.getText().toString();
-                curres=result.getText().toString();
-                history.setText(his+curres+"-");
-                    if(operator==true)
+                    number = number.substring(0,number.length()-1);
+
+                    if (number.length() == 0)
                     {
-                        if(status=="addition") {
+                        btnDel.setClickable(false);
+                    }
+                    else if (number.contains("."))
+                    {
+                        dot = false;
+                    }
+                    else
+                    {
+                        dot = true;
+                    }
+
+                    textViewResult.setText(number);
+                }
+
+
+
+            }
+        });
+
+        btnPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                history = textViewHistory.getText().toString();
+                currentResult = textViewResult.getText().toString();
+                if(!operatorcheck) {
+                    if (equalsoperater) {
+                        textViewHistory.setText(currentResult + "+");
+                    } else {
+                        textViewHistory.setText(history + currentResult + "+");
+                    }
+
+                    if (operator) {
+                        if (status == "multiplacition") {
+                            multiply();
+                        } else if (status == "division") {
+                            divide();
+                        } else if (status == "subtraction") {
+                            minus();
+                        } else {
                             plus();
-                        } else if (status=="multiplication") {
-                            mul();
-                        } else if (status=="divide") {
-                            div();
+                        }
+                    }
+                }else {
+                    String ss=textViewHistory.getText().toString();
+                    String s=ss.substring(0,ss.length()-1);
+                    textViewHistory.setText(s+"+");
+                }
+
+                status = "sum";
+                operator = false;
+                number = null;
+                equalsoperater=false;
+                operatorcheck=true;
+
+            }
+        });
+
+        btnMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                history = textViewHistory.getText().toString();
+                currentResult = textViewResult.getText().toString();
+                if(!operatorcheck) {
+                    if (equalsoperater) {
+                        textViewHistory.setText(currentResult + "-");
+                    } else {
+                        textViewHistory.setText(history + currentResult + "-");
+                    }
+
+                    if (operator) {
+                        if (status == "multiplacition") {
+                            multiply();
+                        } else if (status == "division") {
+                            divide();
+                        } else if (status == "sum") {
+                            plus();
                         } else {
                             minus();
                         }
                     }
-                    status="subtraction";
-                    operator=false;
-                    number=null;
-            }
-        });
-        btnAC.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                number=null;
-                status=null;
-                firstNumber=0;
-                lastNumber=0;
-                result.setText("0");
-                history.setText("");
-                dotflag=true;
-                btnACcontrol=true;
-            }
-        });
-        btnDOT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(dotflag==true) {
-                    if (number == null) {
-                        number = "0.";
-                    } else {
-                        number = number + ".";
-                    }
-                }
-                result.setText(number);
-                dotflag=false;
-            }
-        });
-        btnDEL.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(btnACcontrol==true) {
-                    result.setText("0");
                 }
                 else {
-                    number=number.substring(0,number.length()-1);
-                    if(number.length()==0) {
-                        btnDEL.setClickable(false);
-                    } else if (number.contains(".")) {
-                        dotflag=false;
-                    } else {
-                        dotflag=true;
-                    }
-                    result.setText(number);
+                    String ss=textViewHistory.getText().toString();
+                    String s=ss.substring(0,ss.length()-1);
+                    textViewHistory.setText(s+"-");
                 }
+
+                status = "subtraction";
+                operator = false;
+                number = null;
+                equalsoperater=false;
+                operatorcheck=true;
+            }
+        });
+
+        btnMulti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                history = textViewHistory.getText().toString();
+                currentResult = textViewResult.getText().toString();
+                if(!operatorcheck)
+                {
+                if(equalsoperater)
+                {
+                    textViewHistory.setText(currentResult+"*");
+                }
+                else {
+                    textViewHistory.setText(history + currentResult + "*");
+                }
+
+                if (operator) {
+                    if (status == "sum") {
+                        plus();
+                    } else if (status == "division") {
+                        divide();
+                    } else if (status == "subtraction") {
+                        minus();
+                    } else {
+                        multiply();
+                    }
+                }
+                }else {
+                    String ss=textViewHistory.getText().toString();
+                    String s=ss.substring(0,ss.length()-1);
+                    textViewHistory.setText(s+"*");
+                }
+
+                status = "multiplacition";
+                operator = false;
+                number = null;
+                equalsoperater=false;
+                operatorcheck=true;
 
             }
         });
-        btnEQUALS.setOnClickListener(new View.OnClickListener() {
+
+        btnDivide.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                if(operator==true)
+            public void onClick(View v) {
+
+                history = textViewHistory.getText().toString();
+                currentResult = textViewResult.getText().toString();
+                if(!operatorcheck) {
+                    if (equalsoperater) {
+                        textViewHistory.setText(currentResult + "/");
+                    } else {
+                        textViewHistory.setText(history + currentResult + "/");
+                    }
+
+                    if (operator) {
+                        if (status == "multiplacition") {
+                            multiply();
+                        } else if (status == "sum") {
+                            plus();
+                        } else if (status == "subtraction") {
+                            minus();
+                        } else {
+                            divide();
+                        }
+                    }
+                }else {
+                    String ss=textViewHistory.getText().toString();
+                    String s=ss.substring(0,ss.length()-1);
+                    textViewHistory.setText(s+"/");
+                }
+
+                status = "division";
+                operator = false;
+                number = null;
+                equalsoperater=false;
+                operatorcheck=true;
+
+            }
+        });
+
+        btnEquals.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                equalsoperater=true;
+
+                if (operator)
                 {
-                    if(status=="addition") {
+                    if (status == "sum")
+                    {
                         plus();
-                    } else if (status=="multiplication") {
-                        mul();
-                    } else if (status=="divide") {
-                        div();
-                    } else if(status=="subtraction"){
+                    }
+                    else if (status == "subtraction")
+                    {
                         minus();
                     }
-                    else {
-                        firstNumber=Double.parseDouble(result.getText().toString());
+                    else if (status == "multiplacition")
+                    {
+                        multiply();
+                    }
+                    else if (status == "division")
+                    {
+                        divide();
+                    }
+                    else
+                    {
+                        firstNumber = Double.parseDouble(textViewResult.getText().toString());
                     }
                 }
-                operator=false;
-                btnEqualsControl=true;
+
+                operator = false;
+                btnEqualsControl = true;
+
             }
         });
 
+        btnDot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if (dot)
+                {
+
+                    if (number == null)
+                    {
+                        number = "0.";
+                    }
+                    else
+                    {
+                        number = number + ".";
+                    }
+
+                }
+
+                textViewResult.setText(number);
+                dot = false;
+            }
+        });
     }
+
     public void numberClick(String view)
     {
-        if(number==null)
+        if (number == null)
         {
-            number=view;
-        } else if (btnEqualsControl==true) {
-            firstNumber=0;
-            lastNumber=0;
-            number=view;
-        } else {
-            number=number+view;
+            number = view;
         }
-        result.setText(number);
-        operator=true;
-        btnACcontrol=false;
-        btnDEL.setClickable(true);
-        btnEqualsControl=false;
+        else if (btnEqualsControl)
+        {
+            firstNumber = 0;
+            lastNumber = 0;
+            number = view;
+        }
+        else
+        {
+            number = number + view;
+        }
+
+        textViewResult.setText(number);
+        operator = true;
+        btnACcontrol = false;
+        btnDel.setClickable(true);
+        btnEqualsControl = false;
     }
+
     public void plus()
     {
-        lastNumber=Double.parseDouble(result.getText().toString());
-        firstNumber=firstNumber+lastNumber;
-        result.setText(myformat.format(firstNumber));
-        dotflag=true;
+        lastNumber = Double.parseDouble(textViewResult.getText().toString());
+        textViewHistory.setText(myFormatter.format(firstNumber)+"+"+myFormatter.format(lastNumber));
+        firstNumber = firstNumber + lastNumber;
+
+        textViewResult.setText(myFormatter.format(firstNumber));
+        dot = true;
     }
-    public void minus() {
-        if(firstNumber==0)
-        {
-            firstNumber=Double.parseDouble(result.getText().toString());
-        }
-        else {
-            lastNumber=Double.parseDouble(result.getText().toString());
-            firstNumber=firstNumber-lastNumber;
-        }
-        result.setText(myformat.format(firstNumber));
-        dotflag=true;
-    }
-    public void mul()
+
+    public void minus()
     {
-        if(firstNumber==0)
+        if (firstNumber == 0)
         {
-            firstNumber=1;
-            lastNumber = Double.parseDouble(result.getText().toString());
+            firstNumber = Double.parseDouble(textViewResult.getText().toString());
+        }
+        else
+        {
+            lastNumber = Double.parseDouble(textViewResult.getText().toString());
+            textViewHistory.setText(myFormatter.format(firstNumber)+"-"+myFormatter.format(lastNumber));
+            firstNumber = firstNumber - lastNumber;
+        }
+
+        textViewResult.setText(myFormatter.format(firstNumber));
+        dot = true;
+    }
+
+    public void multiply()
+    {
+        if (firstNumber == 0)
+        {
+            firstNumber = 1;
+            lastNumber = Double.parseDouble(textViewResult.getText().toString());
+            textViewHistory.setText(myFormatter.format(firstNumber)+"*"+myFormatter.format(lastNumber));
             firstNumber = firstNumber * lastNumber;
         }
-        else {
-            lastNumber = Double.parseDouble(result.getText().toString());
+        else
+        {
+            lastNumber = Double.parseDouble(textViewResult.getText().toString());
+            textViewHistory.setText(myFormatter.format(firstNumber)+"*"+myFormatter.format(lastNumber));
             firstNumber = firstNumber * lastNumber;
         }
-        result.setText(myformat.format(firstNumber));
-        dotflag=true;
+
+        textViewResult.setText(myFormatter.format(firstNumber));
+        dot = true;
     }
-    public void div()
+
+    public void divide()
     {
-        if(firstNumber==0)
+        if (firstNumber == 0)
         {
-            lastNumber=Double.parseDouble(result.getText().toString());
-            firstNumber=lastNumber/1;
+            lastNumber = Double.parseDouble(textViewResult.getText().toString());
+            textViewHistory.setText(myFormatter.format(firstNumber)+"/"+myFormatter.format(lastNumber));
+            firstNumber = lastNumber / 1;
         }
-        else {
-            lastNumber = Double.parseDouble(result.getText().toString());
+        else
+        {
+            lastNumber = Double.parseDouble(textViewResult.getText().toString());
+            textViewHistory.setText(myFormatter.format(firstNumber)+"/"+myFormatter.format(lastNumber));
             firstNumber = firstNumber / lastNumber;
         }
-        result.setText(myformat.format(firstNumber));
-        dotflag=true;
+
+        textViewResult.setText(myFormatter.format(firstNumber));
+        dot = true;
     }
 }
